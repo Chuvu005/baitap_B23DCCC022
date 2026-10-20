@@ -1,0 +1,139 @@
+{
+  "info": {
+    "_postman_id": "c6239f15-bc49-43c2-841f-8c3b28b248a3",
+    "name": "Hệ thống thanh toán học phí & Ngân hàng giả lập",
+    "description": "Bộ sưu tập Postman kiểm thử Fee Service (port 4001) và Bank Service (port 4002) theo 4 tình huống sự cố",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Fee Service - Xem học phí sinh viên 1 (Nợ 50tr)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4001/students/1/fees",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4001",
+          "path": ["students", "1", "fees"]
+        }
+      }
+    },
+    {
+      "name": "2. Fee Service - Xem học phí sinh viên 2 (Nợ 0đ)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4001/students/2/fees",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4001",
+          "path": ["students", "2", "fees"]
+        }
+      }
+    },
+    {
+      "name": "3. Fee Service - Xem học phí sinh viên 3 (Nợ 3.2tr)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4001/students/3/fees",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4001",
+          "path": ["students", "3", "fees"]
+        }
+      }
+    },
+    {
+      "name": "4. Fee Service - Thanh toán hợp lệ (100.000đ)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 100000\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4001/students/1/payments",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4001",
+          "path": ["students", "1", "payments"]
+        }
+      }
+    },
+    {
+      "name": "5. Fee Service - Thanh toán vượt hạn mức 20tr (Bị từ chối 402)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 25000000\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4001/students/1/payments",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4001",
+          "path": ["students", "1", "payments"]
+        }
+      }
+    },
+    {
+      "name": "6. Bank Gateway - Lấy thống kê (/stats)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4002/stats",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4002",
+          "path": ["stats"]
+        }
+      }
+    },
+    {
+      "name": "7. Bank Gateway - Trừ tiền trực tiếp (/charges có Idempotency-Key)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "TEST_IDEMPOTENCY_001"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reference\": \"TEST_IDEMPOTENCY_001\",\n  \"amount\": 500000\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4002/charges",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4002",
+          "path": ["charges"]
+        }
+      }
+    }
+  ]
+}

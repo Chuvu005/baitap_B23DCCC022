@@ -1,0 +1,18 @@
+{
+  "name": "tuition-payment-system",
+  "version": "1.0.0",
+  "description": "Tuition payment system with resilient bank gateway integration",
+  "main": "fee-service/index.js",
+  "scripts": {
+    "start:fee": "node fee-service/index.js",
+    "start:bank": "node bank-service/index.js",
+    "test:s1": "node tests/test_scenario1.js",
+    "test:s2": "node tests/test_scenario2.js",
+    "test:s3": "node tests/test_scenario3.js",
+    "test:s4": "node tests/test_scenario4.js",
+    "test:all": "node tests/run_all_tests.js"
+  },
+  "dependencies": {
+    "express": "^4.22.3"
+  }
+}
